@@ -1,39 +1,53 @@
 # Generated with protoc-gen-openapi
-# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/apps/protoc-gen-openapi
 
 openapi: 3.0.3
 info:
-    title: Greeter API
-    description: The greeting service definition.
+    title: Search API
     version: 0.0.1
 paths:
-    /helloworld/{name}:
-        get:
+    /search/must:
+        post:
             tags:
-                - Greeter
-                - subgroup
-            description: Sends a greeting
-            operationId: Greeter_SayHello
-            parameters:
-                - name: name
-                  in: path
-                  required: true
-                  schema:
-                    type: string
+                - Search
+            operationId: Search_MustSearch
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/MustSearchRequest'
+                required: true
             responses:
                 "200":
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/helloworld.v1.HelloReply'
+                                $ref: '#/components/schemas/MustSearchReply'
 components:
     schemas:
-        helloworld.v1.HelloReply:
+        MustSearchReply:
             type: object
             properties:
-                message:
+                product:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Product'
+        MustSearchRequest:
+            type: object
+            properties:
+                product:
+                    $ref: '#/components/schemas/Product'
+        Product:
+            type: object
+            properties:
+                name:
                     type: string
-            description: The response message containing the greetings
+                price:
+                    type: number
+                    format: float
+                group:
+                    type: integer
+                    format: int64
 tags:
-    - name: Greeter
+    - name: Search
