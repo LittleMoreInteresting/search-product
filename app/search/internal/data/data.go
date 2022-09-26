@@ -1,6 +1,7 @@
 package data
 
 import (
+	"github.com/olivere/elastic/v7"
 	"search-product/app/search/internal/conf"
 
 	"github.com/go-kratos/kratos/v2/log"
@@ -13,6 +14,7 @@ var ProviderSet = wire.NewSet(NewData, NewSearcherRepo)
 // Data .
 type Data struct {
 	// TODO wrapped database client
+	client *elastic.Client
 }
 
 // NewData .
