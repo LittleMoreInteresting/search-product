@@ -19,10 +19,12 @@ type Data struct {
 
 // NewData .
 func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
+	es := mustEsClient(c)
 	cleanup := func() {
 		log.NewHelper(logger).Info("closing the data resources")
+		es.Stop()
 	}
-	return &Data{es: mustEsClient(c)}, cleanup, nil
+	return &Data{es: es}, cleanup, nil
 }
 
 func mustEsClient(c *conf.Data) (esClient *elastic.Client) {
