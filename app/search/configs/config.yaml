@@ -13,3 +13,9 @@ data:
     addr: 127.0.0.1:6379
     read_timeout: 0.2s
     write_timeout: 0.2s
+  es:
+    endpoints:
+      - http://192.168.72.128:9201
+    username:
+    password:
+    sniff: false
