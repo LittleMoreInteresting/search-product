@@ -1,13 +1,14 @@
 syntax = "proto3";
 
-package helloworld.v1;
+package search.v1;
 
-option go_package = "helloworld/api/helloworld/v1;v1";
+option go_package = "search-product/api/search/v1;v1";
 option java_multiple_files = true;
-option java_package = "helloworld.v1";
-option objc_class_prefix = "APIHelloworldV1";
+option java_package = "search.v1";
+option objc_class_prefix = "APISearchV1";
 
 enum ErrorReason {
   GREETER_UNSPECIFIED = 0;
   USER_NOT_FOUND = 1;
+  TARGET_NOT_FOUND = 2;
 }

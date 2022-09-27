@@ -36,6 +36,15 @@ message Data {
     google.protobuf.Duration read_timeout = 3;
     google.protobuf.Duration write_timeout = 4;
   }
+  message Elasticsearch {
+    repeated string endpoints = 1;
+    string username = 2;
+    string password = 3;
+    bool sniff = 4;
+    google.protobuf.Duration sniff_timeout = 5;
+    google.protobuf.Duration sniff_interval = 6;
+  }
   Database database = 1;
   Redis redis = 2;
+  Elasticsearch es = 3;
 }
