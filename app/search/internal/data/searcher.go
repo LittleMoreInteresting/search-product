@@ -19,6 +19,8 @@ func NewSearcherRepo(data *Data, logger log.Logger) biz.SearcherRepo {
 		log:  log.NewHelper(logger),
 	}
 }
-func (r *searcherRepo) MustSearch(ctx context.Context, g *biz.Searcher) (*biz.Searcher, error) {
-	return g, nil
+func (r *searcherRepo) MustSearch(ctx context.Context, g *biz.Searcher) ([]*biz.Searcher, error) {
+	var res []*biz.Searcher
+
+	return res, nil
 }

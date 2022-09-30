@@ -19,12 +19,12 @@ type Searcher struct {
 	Id    int64
 	Name  string
 	Price float64
-	Desc  string
+	Group int64
 }
 
 // GreeterRepo is a Greater repo.
 type SearcherRepo interface {
-	MustSearch(context.Context, *Searcher) (*Searcher, error)
+	MustSearch(context.Context, *Searcher) ([]*Searcher, error)
 }
 
 // SearcherUsecase is a SearcherRepo usecase.
@@ -39,7 +39,7 @@ func NewSearcherUsecase(repo SearcherRepo, logger log.Logger) *SearcherUsecase {
 }
 
 // CreateGreeter creates a Greeter, and returns the new Greeter.
-func (uc *SearcherUsecase) MustSearcher(ctx context.Context, g *Searcher) (*Searcher, error) {
+func (uc *SearcherUsecase) MustSearcher(ctx context.Context, g *Searcher) ([]*Searcher, error) {
 	uc.log.WithContext(ctx).Infof("CreateGreeter: %v", g.Id)
 	return uc.repo.MustSearch(ctx, g)
 }
