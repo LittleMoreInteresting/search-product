@@ -7,12 +7,6 @@ import (
 	"search-product/app/search/internal/biz"
 )
 
-type SearchService struct {
-	pb.UnimplementedSearchServer
-
-	uc *biz.SearcherUsecase
-}
-
 func NewSearchService(uc *biz.SearcherUsecase) *SearchService {
 	return &SearchService{uc: uc}
 }

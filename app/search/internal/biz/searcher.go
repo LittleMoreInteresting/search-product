@@ -40,6 +40,6 @@ func NewSearcherUsecase(repo SearcherRepo, logger log.Logger) *SearcherUsecase {
 
 // CreateGreeter creates a Greeter, and returns the new Greeter.
 func (uc *SearcherUsecase) MustSearcher(ctx context.Context, g *Searcher) ([]*Searcher, error) {
-	uc.log.WithContext(ctx).Infof("CreateGreeter: %v", g.Id)
+
 	return uc.repo.MustSearch(ctx, g)
 }

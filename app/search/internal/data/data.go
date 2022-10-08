@@ -19,7 +19,10 @@ type Data struct {
 
 // NewData .
 func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
-	es := mustEsClient(c)
+	es, err := mustEsClient(c)
+	if err != nil {
+		log.NewHelper(logger).Infof("es error %v", err)
+	}
 	cleanup := func() {
 		log.NewHelper(logger).Info("closing the data resources")
 		es.Stop()
@@ -27,7 +30,7 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 	return &Data{es: es}, cleanup, nil
 }
 
-func mustEsClient(c *conf.Data) (esClient *elastic.Client) {
+func mustEsClient(c *conf.Data) (esClient *elastic.Client, err error) {
 	//set Endpoints
 	esOpts := []elastic.ClientOptionFunc{
 		elastic.SetURL(c.Es.Endpoints...),
@@ -48,6 +51,7 @@ func mustEsClient(c *conf.Data) (esClient *elastic.Client) {
 			esOpts = append(esOpts, elastic.SetSnifferInterval(c.Es.SniffInterval.AsDuration()))
 		}
 	}
-	esClient, _ = elastic.NewClient(esOpts...)
+
+	esClient, err = elastic.NewClient(esOpts...)
 	return
 }

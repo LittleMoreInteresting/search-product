@@ -3,7 +3,7 @@ server:
     addr: 0.0.0.0:8000
     timeout: 1s
   grpc:
-    addr: 0.0.0.0:9000
+    addr: 0.0.0.0:9001
     timeout: 1s
 data:
   database:
@@ -15,7 +15,7 @@ data:
     write_timeout: 0.2s
   es:
     endpoints:
-      - http://192.168.72.128:9201
+      - http://192.168.72.128:9200
     username:
     password:
     sniff: false
