@@ -19,7 +19,7 @@ func NewESModel(client *elastic.Client, table string) *ESModel {
 	}
 }
 
-func (esm *ESModel) Query(ctx context.Context, field string, filter elastic.Query, sort string, page int, limit int) (*elastic.SearchResult, error) {
+func (esm *ESModel) MustQuery(ctx context.Context, field string, filter []elastic.Query, sort string, page int, limit int) (*elastic.SearchResult, error) {
 	// 分页数据处理
 	isAsc := true
 	if sort != "" {
@@ -47,10 +47,14 @@ func (esm *ESModel) Query(ctx context.Context, field string, filter elastic.Quer
 
 	// 开始查询位置
 	fromStart := (page - 1) * limit
+	query := elastic.NewBoolQuery()
+	for _, q := range filter {
+		query = query.Must(q)
+	}
 	res, err := esm.client.Search().
 		Index(esm.table).
 		FetchSourceContext(fsc).
-		Query(filter).
+		Query(query).
 		Sort(sort, isAsc).
 		From(fromStart).
 		Size(limit).

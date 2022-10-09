@@ -24,8 +24,15 @@ func NewSearcherRepo(data *Data, logger log.Logger) biz.SearcherRepo {
 func (r *searcherRepo) MustSearch(ctx context.Context, g *biz.Searcher) ([]*biz.Searcher, error) {
 	var res []*biz.Searcher
 	produceEs := NewESModel(r.data.es, "product")
-	filter := elastic.NewTermQuery("name", g.Name)
-	query, err := produceEs.Query(ctx, "name,price", filter, "price desc", 1, 20)
+	var filter []elastic.Query
+	if len(g.Name) > 0 {
+		filter = append(filter, elastic.NewTermQuery("name", g.Name))
+	}
+	if g.Price > 0 {
+		filter = append(filter, elastic.NewTermQuery("price", g.Price))
+	}
+
+	query, err := produceEs.MustQuery(ctx, "name,price", filter, "price desc", 1, 20)
 	if err != nil {
 		return nil, err
 	}
